@@ -47,4 +47,16 @@ class HomeController extends Controller
 
         return view('clients.products.details', compact('id'));
     }
+    public function download()
+    {
+        $image = trim(request()->image);
+        $header = ['Content-Type' => 'application/pdf'];
+        return (response())->download($image, "image" . time() . '.pdf', $header);
+        if (!empty($image)) {
+            return response()->streamDownload(function() use ($image) {
+                $image_content = file_get_contents($image);
+                echo $image_content;
+            }, "image_123.jpg");
+        }
+    }
 }
