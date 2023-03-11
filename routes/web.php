@@ -21,7 +21,7 @@ use Illuminate\Http\Response;
 */
 
 // Client Routes
-Route::prefix('category')->group(function () {
+Route::prefix('/')->group(function () {
     Route::get('/', [CategoryController::class, 'index']);
     Route::get('/edit/{id}', [CategoryController::class, 'getCategory']);
     Route::post('/edit/{id}', [CategoryController::class, 'updateCategory'])->name('category.update');

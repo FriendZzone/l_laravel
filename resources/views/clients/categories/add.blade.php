@@ -3,7 +3,7 @@
 echo route('category.handleAdd');
 ?>" method="POST">
     <div>
-        <input type="text" name="category_name" placeholder="Category name">
+        <input type="text" name="id" placeholder="Category name">
         <?php echo csrf_field(); ?>
         {{-- <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>"> --}}
     </div>
