@@ -24,6 +24,7 @@
                 </div>
                 <div class="col-md-8">
                     <div class="content">
+                        @yield('header')
                         @yield('content')
                     </div>
                 </div>

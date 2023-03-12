@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 use GuzzleHttp\Middleware;
 use Illuminate\Http\Response;
 
@@ -54,11 +55,17 @@ Route::post('/', function () {
     return request()->username;
 });
 
-Route::get('/download', [HomeController::class, 'download'])->name('download');
-
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::prefix('users')->name('users.')->group(function () {
+    Route::get('/', [UserController::class, 'index'])->name('index');
+    Route::get('/add', [UserController::class, 'add'])->name('add');
+    Route::post('/add', [UserController::class, 'postAdd'])->name('postAdd');
+    Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit');
+    Route::post('/edit', [UserController::class, 'postEdit'])->name('postEdit');
+    Route::get('/delete/{id}', [UserController::class, 'delete'])->name('delete');
+});
 // Route::get('/', [HomeController::class, 'index'])->name('home');
 // Route::get('/', [HomeController::class, 'index'])->name('home');
-// Route::get('/product', [HomeController::class, 'product'])->name('product');
 // Route::get('/add_product', [HomeController::class, 'getAdd'])->name('get_add_product');
 // Route::post('/add_product', [HomeController::class, 'postAdd'])->name('add_product');
 // Route::put('/add_product', [HomeController::class, 'putAdd'])->name('put_product');

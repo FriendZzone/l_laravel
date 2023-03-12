@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -53,7 +54,7 @@ class HomeController extends Controller
         $header = ['Content-Type' => 'application/pdf'];
         return (response())->download($image, "image" . time() . '.pdf', $header);
         if (!empty($image)) {
-            return response()->streamDownload(function() use ($image) {
+            return response()->streamDownload(function () use ($image) {
                 $image_content = file_get_contents($image);
                 echo $image_content;
             }, "image_123.jpg");
