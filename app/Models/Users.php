@@ -41,4 +41,21 @@ class Users extends Model
         $result = DB::statement($sql);
         return $result;
     }
+
+    public function queryBuilder()
+    {
+        $id = 2;
+        DB::enableQueryLog();
+        $data = DB::table($this->table)
+            ->where('group_id', '=', function ($query) {
+                return  $query->select("id")
+                    ->from('groups')
+                    ->where('name', 'Admin')
+                    ->get();
+            })
+            ->get();
+        dd($data);
+        $sql = DB::getQueryLog();
+        return $sql[0];
+    }
 }

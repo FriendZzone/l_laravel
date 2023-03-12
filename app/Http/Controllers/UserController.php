@@ -19,8 +19,10 @@ class UserController extends Controller
     public function index()
     {
         $title = 'User List';
-        $usersList = $this->users->getAllUser();
-        return view('clients/users/lists', compact('usersList', 'title'));
+        $data = $this->users->queryBuilder();
+        dd($data);
+        // $usersList = $this->users->getAllUser();
+        // return view('clients/users/lists', compact('usersList', 'title'));
     }
     public function add()
     {
