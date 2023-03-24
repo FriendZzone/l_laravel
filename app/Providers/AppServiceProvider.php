@@ -6,6 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use App\View\Components\Alert;
 use App\View\Components\Input\Button;
+use Illuminate\Pagination\Paginator;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -34,10 +36,11 @@ class AppServiceProvider extends ServiceProvider
             // return boolean value
             if (config('constant.constant_1') === $value) {
                 return true;
-            } 
+            }
             return false;
         });
         Blade::component('package-alert', Alert::class);
         Blade::component('package-button', Button::class);
+        Paginator::useBootstrap();
     }
 }

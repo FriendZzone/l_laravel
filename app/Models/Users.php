@@ -15,25 +15,54 @@ class Users extends Model
         $data = DB::select("SELECT * FROM $this->table WHERE id = ?", [$id]);
         return $data;
     }
-    public function getAllUser()
+    public function getAllUser($filters = [], $keyword = '', $sortFilter = null, $perPage = null)
     {
-        $data = DB::select("SELECT * FROM $this->table");
-        return $data;
+        DB::enableQueryLog();
+        $users = DB::table($this->table)
+            ->join('groups', $this->table . '.group_id', '=', 'groups.id')
+            ->select('users.*', 'groups.name as group_name');
+        if (!empty($filters)) {
+            $users = $users->where($filters);
+        }
+        if (!empty($keyword)) {
+            $users = $users
+                ->where(function ($query) use ($keyword) {
+                    return $query
+                        ->where('users.name', 'like', '%' . $keyword . '%')
+                        ->orWhere('users.email', 'like', '%' . $keyword . '%')
+                        ->orWhere('groups.name', 'like', '%' . $keyword . '%');
+                });
+        }
+        if (!empty($sortFilter)) {
+            $users = $users->orderBy('users.' . $sortFilter['sortBy'], $sortFilter['sortType']);
+        }
+
+        if (!empty($perPage)) {
+            $users = $users->paginate($perPage)->withQueryString();
+        } else {
+            $users = $users->get();
+        }
+        $sql = DB::getQueryLog();
+        // dd($sql);
+        return $users;
     }
     public function insertUser($dataInsert)
     {
-        $result = DB::insert("INSERT INTO $this->table (name, email, password, created_at) VALUES (?, ? , ?, ?)", $dataInsert);
+        // $result = DB::insert("INSERT INTO $this->table (name, email, password, created_at) VALUES (?, ? , ?, ?)", $dataInsert);
+        $result = DB::table($this->table)->insert($dataInsert);
         return $result;
     }
-    public function updateUser($dataInsert, $id)
+    public function updateUser($dataUpdate, $id)
     {
-        $data = array_merge($dataInsert, [$id]);
-        $result = DB::update("UPDATE $this->table SET name = ?, email=?, password=?, updated_at=? WHERE id = ?", $data);
+        // $data = array_merge($dataInsert, [$id]);
+        // $result = DB::update("UPDATE $this->table SET name = ?, email=?, password=?, updated_at=? WHERE id = ?", $data);
+        $result = DB::table($this->table)->where('id', $id)->update($dataUpdate);
         return $result;
     }
     public function deleteUser($id)
     {
-        $result = DB::delete("DELETE FROM $this->table WHERE id = ?", [$id]);
+        // $result = DB::delete("DELETE FROM $this->table WHERE id = ?", [$id]);
+        $result = DB::table($this->table)->where('id', $id)->delete();
         return $result;
     }
     public function statementUser($sql)

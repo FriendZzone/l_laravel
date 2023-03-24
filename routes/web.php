@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use GuzzleHttp\Middleware;
 use Illuminate\Http\Response;
@@ -64,6 +65,18 @@ Route::prefix('users')->name('users.')->group(function () {
     Route::post('/edit', [UserController::class, 'postEdit'])->name('postEdit');
     Route::get('/delete/{id}', [UserController::class, 'delete'])->name('delete');
 });
+
+
+Route::prefix('post')->name('post.')->group(function () {
+    Route::get('/', [PostController::class, 'index'])->name('index');
+    Route::get('/add', [PostController::class, 'add'])->name('add');
+    Route::get('/update/{id}', [PostController::class, 'update'])->name('update');
+    Route::get('/delete/{id}', [PostController::class, 'delete'])->name('delete');
+    Route::get('/force-delete/{id}', [PostController::class, 'forceDelete'])->name('force-delete');
+    Route::get('/restore/{id}', [PostController::class, 'restore'])->name('restore');
+    Route::post('/deleteAny', [PostController::class, 'deleteAny'])->name('deleteAny');
+});
+
 // Route::get('/', [HomeController::class, 'index'])->name('home');
 // Route::get('/', [HomeController::class, 'index'])->name('home');
 // Route::get('/add_product', [HomeController::class, 'getAdd'])->name('get_add_product');
