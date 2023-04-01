@@ -13,7 +13,15 @@ class Groups extends Model
     public function getAll()
     {
         return DB::table($this->table)
-        ->orderBy('name', 'ASC')
-        ->get();
+            ->orderBy('name', 'ASC')
+            ->get();
+    }
+    public function users()
+    {
+        return $this->hasMany(
+            Users::class,
+            'group_id',
+            'id'
+        );
     }
 }

@@ -8,8 +8,15 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Models\Comments;
+use App\Models\Country;
+use App\Models\Mechanics;
+use App\Models\Post;
+use App\Models\Users;
+use Faker\Factory;
 use GuzzleHttp\Middleware;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,6 +71,7 @@ Route::prefix('users')->name('users.')->group(function () {
     Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit');
     Route::post('/edit', [UserController::class, 'postEdit'])->name('postEdit');
     Route::get('/delete/{id}', [UserController::class, 'delete'])->name('delete');
+    Route::get('/relation', [UserController::class, 'relationOneToMany'])->name('relation');
 });
 
 
@@ -77,6 +85,23 @@ Route::prefix('post')->name('post.')->group(function () {
     Route::post('/deleteAny', [PostController::class, 'deleteAny'])->name('deleteAny');
 });
 
+
+Route::get('/cars', function () {
+
+    $post = Post::find(2);
+    $post->comments()->create([
+        'name' => 'comment insert 3',
+        'content' => 'Comment Content 3'
+    ]);
+});
+
+
+Route::get('/faker', function () {
+
+    $fake = Factory::create();
+
+    dd($fake->name);
+});
 // Route::get('/', [HomeController::class, 'index'])->name('home');
 // Route::get('/', [HomeController::class, 'index'])->name('home');
 // Route::get('/add_product', [HomeController::class, 'getAdd'])->name('get_add_product');

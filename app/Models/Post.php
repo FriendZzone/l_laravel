@@ -30,4 +30,13 @@ class Post extends Model
     public $timestamps = true;
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
+
+    public function comments()
+    {
+        return $this->hasMany(
+            Comments::class,
+            'post_id',
+            'id'
+        );
+    }
 }

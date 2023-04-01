@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Models\Groups;
+use App\Models\Phone;
 use App\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -133,5 +134,22 @@ class UserController extends Controller
         } else {
             return redirect()->route('users.index')->withErrors(['msg' => 'User does not exist']);
         }
+    }
+
+    public function relationOneToOne()
+    {
+        $user = $this->users->find(16)->phone;
+        dd($user);
+    }
+    public function relationOneToMany()
+    {
+        $users = Groups::find(1)->users;
+        dd($users);
+        foreach ($users as $user) {
+
+            var_dump($user->group_id);
+        }
+        // $group = $this->users->find(28)->group()->first()->name;
+        // dd($group);
     }
 }

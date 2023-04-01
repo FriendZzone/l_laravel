@@ -5,11 +5,35 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use App\Models\Phone;
 
 class Users extends Model
 {
     use HasFactory;
     protected $table = 'users';
+
+    public function phone()
+    {
+        return $this->hasOne(
+            Phone::class,
+            'user_id',
+            'id'
+        )->withDefault(
+            function ($phone) {
+                $phone->phone = 'N/A';
+                return $phone;
+            }
+        );
+    }
+    public function group()
+    {
+        return $this->belongsTo(
+            Groups::class,
+            'group_id',
+            'id'
+        );
+    }
+
     public function getUser($id)
     {
         $data = DB::select("SELECT * FROM $this->table WHERE id = ?", [$id]);
@@ -38,7 +62,7 @@ class Users extends Model
         }
 
         if (!empty($perPage)) {
-            $users = $users->paginate($perPage)->withQueryString();
+            // $users = $users->paginate($perPage)->withQueryString();
         } else {
             $users = $users->get();
         }
