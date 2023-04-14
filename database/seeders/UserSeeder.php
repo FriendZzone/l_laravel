@@ -177,16 +177,12 @@ class UserSeeder extends Seeder
     {
         //
         $faker = Factory::create();
-        for ($i = 0; $i < 50; $i++) {
-            DB::table('users')->insert([
-                'name' => $faker->name,
-                'email' => $faker->email,
-                'password' => Hash::make('123456'),
-                'country_id' => 1,
-                'group_id' => 1,
-                'created_at' => $faker->dateTime('Y-m-d H:i:s'),
-                'updated_at' => $faker->dateTime('Y-m-d H:i:s'),
-            ]);
-        }
+        DB::table('users')->insert([
+            'name' => $faker->name,
+            'email' => $faker->email,
+            'password' => Hash::make('12345678'),
+            'created_at' => $faker->dateTime('Y-m-d H:i:s'),
+            'updated_at' => $faker->dateTime('Y-m-d H:i:s'),
+        ]);
     }
 }

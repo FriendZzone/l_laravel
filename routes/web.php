@@ -107,3 +107,6 @@ Route::get('/faker', function () {
 // Route::get('/add_product', [HomeController::class, 'getAdd'])->name('get_add_product');
 // Route::post('/add_product', [HomeController::class, 'postAdd'])->name('add_product');
 // Route::put('/add_product', [HomeController::class, 'putAdd'])->name('put_product');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

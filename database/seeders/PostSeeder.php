@@ -18,13 +18,14 @@ class PostSeeder extends Seeder
         //
         $faker = Factory::create();
 
-        DB::table('posts')->insert([
-            'title' => $faker->realText(100),
-            'content' => $faker->randomHtml(2, 3),
-            'status' => rand(0, 1),
-            'user_id' => 2,
-            'created_at' => $faker->dateTime('Y-m-d H:i:s'),
-            'updated_at' => $faker->dateTime('Y-m-d H:i:s')
-        ]);
+        for ($i = 0; $i < 50; $i++) {
+            DB::table('posts')->insert([
+                'title' => $faker->realText(100),
+                'content' => $faker->randomHtml(2, 3),
+                'user_id' => rand(2, 4),
+                'created_at' => $faker->dateTime('Y-m-d H:i:s'),
+                'updated_at' => $faker->dateTime('Y-m-d H:i:s')
+            ]);
+        }
     }
 }

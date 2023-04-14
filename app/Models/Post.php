@@ -15,21 +15,21 @@ class Post extends Model
     protected $connection = 'mysql';
     protected $table = 'posts';
     protected $primaryKey = 'id';
-    protected $keyType = 'int';
-    protected $fillable = ['title', 'content', 'status'];
+    // protected $keyType = 'int';
+    // protected $fillable = ['title', 'content', 'status'];
 
-    // default values
-    protected $attributes = [
-        'status' => 'thua',
-    ];
+    // // default values
+    // protected $attributes = [
+    //     'status' => 'thua',
+    // ];
 
     // auto increment
     public $incrementing = true;
 
     // timestamp
-    public $timestamps = true;
-    const CREATED_AT = 'created_at';
-    const UPDATED_AT = 'updated_at';
+    // public $timestamps = true;
+    // const CREATED_AT = 'created_at';
+    // const UPDATED_AT = 'updated_at';
 
     public function comments()
     {
