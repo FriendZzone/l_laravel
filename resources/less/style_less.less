@@ -1,0 +1,27 @@
+@brand-color: #337ab7;
+
+h1 {
+    color: @brand-color;
+    font-size: 36px;
+    font-weight: 600;
+}
+
+p {
+    color: #333;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: @brand-color;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    &:hover {
+        background-color: darken(@brand-color, 10%);
+    }
+}
