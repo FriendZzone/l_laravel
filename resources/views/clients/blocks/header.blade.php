@@ -11,7 +11,7 @@
                             <a class="nav-link" href="#">Introduction</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('product')}}">Products</a>
+                            <a class="nav-link" href="">Products</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Services</a>

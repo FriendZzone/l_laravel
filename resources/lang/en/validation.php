@@ -117,6 +117,7 @@ return [
     'uploaded' => 'The :attribute failed to upload.',
     'url' => 'The :attribute format is invalid.',
     'uuid' => 'The :attribute must be a valid UUID.',
+    'upper_case' => 'The :attribute must be a valid uppercase',
 
     /*
     |--------------------------------------------------------------------------
@@ -133,6 +134,9 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'product-name' => [
+            'upper_case' => 'The :attribute must be a valid'
+        ]
     ],
 
     /*
@@ -146,6 +150,8 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'product-name' => 'Tên sản phẩm'
+    ],
 
 ];
