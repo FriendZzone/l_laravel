@@ -1,0 +1,30 @@
+h1 {
+  color: #337ab7;
+  font-size: 36px;
+  font-weight: 600;
+}
+p {
+  color: #333;
+  font-size: 18px;
+  line-height: 1.5;
+}
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #337ab7;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.button:hover {
+  background-color: #285f8f;
+}
+
+p {
+  color: red;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
