@@ -45,6 +45,8 @@ class UserCommand extends Command
         $user->name = $faker->name;
         $user->email = $faker->email;
         $user->password = Hash::make('12345678');
+        $user->country_id = 1;
+        $user->group_id = 1;
         $user->created_at = $faker->dateTime('Y-m-d H:i:s');
         $user->updated_at = $faker->dateTime('Y-m-d H:i:s');
         $user->save();

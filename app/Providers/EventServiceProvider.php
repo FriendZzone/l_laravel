@@ -2,6 +2,12 @@
 
 namespace App\Providers;
 
+use App\Events\OrderPayment;
+use App\Events\UserBlockEvent;
+use App\Listeners\SendEmailAfterOrderPayment;
+use App\Listeners\SendEmailAfterOrderPayment2;
+use App\Listeners\SendEmailAfterOrderPayment3;
+use App\Listeners\SendEmailBlockUser;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -18,6 +24,14 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        OrderPayment::class => [
+            SendEmailAfterOrderPayment::class,
+            SendEmailAfterOrderPayment2::class,
+            SendEmailAfterOrderPayment3::class,
+        ],
+        UserBlockEvent::class => [
+            SendEmailBlockUser::class
+        ]
     ];
 
     /**

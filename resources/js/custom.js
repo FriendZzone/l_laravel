@@ -1,0 +1,1 @@
+const getMsg = () => console.log(12);

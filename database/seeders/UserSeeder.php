@@ -180,9 +180,9 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => $faker->name,
             'email' => $faker->email,
+            'country_id' => 1,
+            'group_id' => 1,
             'password' => Hash::make('12345678'),
-            'created_at' => $faker->dateTime('Y-m-d H:i:s'),
-            'updated_at' => $faker->dateTime('Y-m-d H:i:s'),
         ]);
     }
 }

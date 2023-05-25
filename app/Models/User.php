@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\UserBlockEvent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -124,5 +125,16 @@ class User extends Authenticatable
         dd($data);
         $sql = DB::getQueryLog();
         return $sql[0];
+    }
+
+
+    protected $dispatchesEvents = [
+        'blocked' => UserBlockEvent::class
+    ];
+    public function block()
+    {
+        $this->setAttribute('status', 1);
+        $this->fireModelEvent('blocked');
+        $this->save();
     }
 }

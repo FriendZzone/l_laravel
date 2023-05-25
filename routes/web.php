@@ -1,22 +1,28 @@
 <?php
 
+use App\Events\OrderPayment;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\Admin\ProductsController;
+use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Models\Comments;
 use App\Models\Country;
 use App\Models\Mechanics;
+use App\Models\Orders;
 use App\Models\Post;
 use App\Models\Users;
 use Faker\Factory;
 use GuzzleHttp\Middleware;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,21 +55,27 @@ Route::prefix('admin')->middleware('checkAdminLogin')->group(function () {
 
 
 
-Route::get('/', function () {
-    $title = '<h3 style="color:red;">hoc lap trinh tai Unicode</h3>';
-    $content = 'PHP - Laravel Framework';
-    $dataArr = [
-        'item1',
-        'item2',
-        'item3',
-    ];
-    return view('clients.demo_test');
-})->name('home');
+// Route::get('/', function () {
+//     $title = '<h3 style="color:red;">hoc lap trinh tai Unicode</h3>';
+//     $content = 'PHP - Laravel Framework';
+//     $dataArr = [
+//         'item1',
+//         'item2',
+//         'item3',
+//     ];
+//     return view('clients.demo_test');
+// })->name('home');
 Route::post('/', function () {
     return request()->username;
 });
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+// Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::get('/', function () {
+    return view('mix');
+})->name('home');
+
+
 Route::prefix('users')->name('users.')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('index');
     Route::get('/add', [UserController::class, 'add'])->name('add');
@@ -107,6 +119,51 @@ Route::get('/faker', function () {
 // Route::get('/add_product', [HomeController::class, 'getAdd'])->name('get_add_product');
 // Route::post('/add_product', [HomeController::class, 'postAdd'])->name('add_product');
 // Route::put('/add_product', [HomeController::class, 'putAdd'])->name('put_product');
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/cache', function () {
+    return Cache::put('name', 'dat_do', now()->addMinutes(1));
+})->name('cache');
+
+Route::get('/get-cache', function () {
+    return Cache::get('name');
+})->name('get_cache');
+
+Route::prefix('products')->name('products.')->group(function () {
+    Route::get('/{id}', [ProductsController::class, 'index'])->name('index');
+    Route::get('forget/{id}', [ProductsController::class, 'forgetCache'])->name('forgetCache');
+});
+
+Route::prefix('order')->name('order.')->group(function () {
+    Route::get('/create', function () {
+        $orders = new Orders();
+        $orders->amount = (int)(time() / 1000);
+        $orders->note = 'note';
+        $orders->save();
+
+        // dispatch event
+        OrderPayment::dispatch($orders);
+        return $orders;
+    });
+});
+
+Route::get('users/create', function () {
+    $user = new User();
+    $user->name = 'dat do hoang';
+    $user->email = 'dartdh@gmail.com' . random_int(1, 100);
+    $user->password = Hash::make('Dat12312112');
+    $user->country_id = 1;
+    $user->group_id = 1;
+    $user->save();
+});
+Route::get('users/block/{id}', function ($id) {
+    $user = User::find($id);
+    $user->block();
+});
+
+Route::get('/clear-cache', function () {
+    $status = Artisan::call('cache:clear');
+    dd($status);
+});
+
+Route::get('/product', [ProductController::class, 'index']);

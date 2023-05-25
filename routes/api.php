@@ -27,7 +27,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::prefix('users')->name('users.')->middleware(['auth:api'])->group(function () {
+Route::prefix('users')->name('api_users.')->middleware(['auth:api'])->group(function () {
     Route::get('/', [UsersController::class, 'index'])->name('index');
     Route::get('/{user}', [UsersController::class, 'detail'])->name('detail');
     Route::post('/', [UsersController::class, 'create'])->name('create');
@@ -36,7 +36,7 @@ Route::prefix('users')->name('users.')->middleware(['auth:api'])->group(function
     Route::delete('/{user}', [UsersController::class, 'delete'])->name('delete');
 });
 
-Route::apiResource('products', ProductController::class);
+// Route::apiResource('products', ProductController::class);
 Route::post('login', [AuthController::class, 'login']);
 Route::get('getToken', [AuthController::class, 'getToken'])->middleware(['auth:sanctum']);
 Route::get('refreshToken', [AuthController::class, 'refreshToken']);

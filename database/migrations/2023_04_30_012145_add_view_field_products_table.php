@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddDeletedAtToPostsTable extends Migration
+class AddViewFieldProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddDeletedAtToPostsTable extends Migration
      */
     public function up()
     {
-        Schema::table('posts', function (Blueprint $table) {
-            $table->softDeletes();
+        Schema::table('products', function (Blueprint $table) {
+            $table->integer('view_count')->default(0)->after('name');
         });
     }
 
@@ -25,8 +25,8 @@ class AddDeletedAtToPostsTable extends Migration
      */
     public function down()
     {
-        Schema::table('posts', function (Blueprint $table) {
-            $table->dropSoftDeletes();
+        Schema::table('products', function (Blueprint $table) {
+            $table->dropColumn('view_count');
         });
     }
 }
